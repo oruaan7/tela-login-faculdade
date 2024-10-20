@@ -1,6 +1,6 @@
 import flet as ft
 import pyrebase
- 
+# mude a variável firebaseConfig para a de vocês 
 firebaseConfig = {
 'apiKey': "AIzaSyDHQvqxGrvewaoAgs6nw04z-Y_yBGIkoc0",
   'authDomain': "app-faculdade-6a57e.firebaseapp.com",
@@ -43,7 +43,7 @@ def main(page: ft.page):
             usuario.value = None
             senha.value = None
             page.remove(btn_logar, botao_novo, usuario, senha) # remove os objetos da tela se o login estiver correto
-            page.add(botao_voltar) # adiciona o botão voltar a tela
+            page.add(bemvindo, botao_voltar) # adiciona o botão voltar a tela
             page.update()
         except:
             page.snack_bar = ft.SnackBar(
@@ -59,7 +59,7 @@ def main(page: ft.page):
     # Função responsável por transformar a página de login (fazer os objetos removidos no login, voltar)
     def btn_voltar(e):
         page.add(usuario, senha, btn_logar, botao_novo)
-        page.remove(botao_voltar)
+        page.remove(bemvindo, botao_voltar)
         page.update()   
     # Função que cria e define a condição de cadastro do usuário
     def btn_novo(e):
@@ -94,6 +94,12 @@ def main(page: ft.page):
         width=200,
         height=150,
         fit=ft.ImageFit.CONTAIN,
+    )
+    bemvindo = ft.Text(
+                value = 'Seja Bem-vindo ao Sabor Supremo',
+                size = 15,
+                weight = 'bold',
+                color = 'blue'
     )
     usuario = ft.TextField(
         hint_text = 'Email/Contato',
