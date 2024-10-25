@@ -27,6 +27,11 @@ def main(page: ft.page):
     page.spacing = 20
     page.window.maximizable = False
 
+    BG = '#041955'
+    FWG = '#97b4ff'
+    FG = '#3450a1'
+    PINK = '#eb06ff'
+
     #Função que cria e define a condição de login
     def btn_login(e):
         try:
@@ -42,7 +47,7 @@ def main(page: ft.page):
             page.snack_bar.open = True
             usuario.value = None
             senha.value = None
-            page.remove(btn_logar, botao_novo, usuario, senha, botao_msg) # remove os objetos da tela se o login estiver correto
+            page.remove(btn_logar, botao_novo, usuario, senha) # remove os objetos da tela se o login estiver correto
             page.add(bemvindo, botao_voltar) # adiciona o botão voltar a tela
             page.update()
         except:
@@ -57,22 +62,9 @@ def main(page: ft.page):
             page.snack_bar.open = True
             page.update()
     
-    # Função do botão de mensagem
-    def btn_msg(e):
-        page.snack_bar = ft.SnackBar(
-                content = ft.Text(
-                    value='Bem vindo ao app do Sabor Supremo, faça seu login e aproveite para pedir um delivery! ;D',
-                    color= 'white'
-                ),
-                bgcolor='black',
-                action="OK",
-                duration= 2500
-            )
-        page.snack_bar.open = True
-        page.update()
     # Função responsável por transformar a página de login (fazer os objetos removidos no login, voltar)
     def btn_voltar(e):
-        page.add(usuario, senha, btn_logar, botao_novo, botao_msg)
+        page.add(usuario, senha, btn_logar, botao_novo)
         page.remove(bemvindo, botao_voltar)
         page.update()  
 
@@ -162,16 +154,19 @@ def main(page: ft.page):
         height= 50,
         on_click= btn_voltar
     )
-    botao_msg = ft.ElevatedButton(
-        text='+',
-        color= 'blue',
-        bgcolor= 'Black',
-        width= 60,
-        height= 50,
-        on_click= btn_msg
-    )
+    count = 0
+    def btn_msg(e):
+        nonlocal count  # to modify the count variable found in the outer scope
+        page.open(ft.SnackBar(ft.Text("Bem vindo ao app do Sabor Supremo, faça seu login e aproveite para pedir um delivery! ;D", 
+                                    color='black',
+                                    )
+                            )
+                )
+        count += 1
+
+    page.floating_action_button = ft.FloatingActionButton(icon=ft.icons.MESSAGE, on_click=btn_msg, bgcolor=ft.colors.BLACK87)
 
     # Adiciona todos os elementos à página
-    page.add(img, usuario, senha, btn_logar, botao_novo, botao_msg)
+    page.add(img, usuario, senha, btn_logar, botao_novo)
 # Diz ao flet que deve iniciar a função MAIN
 ft.app(target=main)
